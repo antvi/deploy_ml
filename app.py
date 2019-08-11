@@ -121,6 +121,7 @@ def get_message():
 def tolmachev_best():
     internal_id = randomString(10)
     status_code = 200
+   
 
     response = {'status': 'ok',
                 'code': 200,
@@ -136,7 +137,7 @@ def tolmachev_best():
         getData = request.get_data()
 
         json_params = json.loads(getData)
-        log(logger,json_params,'get json_params',internal_id)
+        log(logger,json_params,'get json_params',internal_id, )
 
         #json_params = {'message_id':0,
         #                'dialog_id':0,
@@ -152,6 +153,7 @@ def tolmachev_best():
         response['dialog_id'] = json_params['dialog_id']
         response['participants_id'] = json_params['participants_id']
         response['user_id'] = json_params['user_id']
+        response['number'] = json_params['number']
         tmp = json_params['number']
         res = 1
         for i in range(len(tmp)):
@@ -167,7 +169,8 @@ def tolmachev_best():
         status_code = 500
         response['models'] = models_main.main(json_params = json_params , model_to = 'message_id')
         log(logger,json_params,'model done',internal_id)
-        
+
+        status_number = json_params['number']
         status_code = 200
         
         
@@ -182,7 +185,7 @@ def tolmachev_best():
 
     response = json.dumps(response)
     print(response)
-    return str(response)  , status_code
+    return str(response)  , status_code,  status_number
 
 if __name__ == "__main__":
     #heroku
