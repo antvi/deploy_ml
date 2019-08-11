@@ -154,6 +154,7 @@ def tolmachev_best():
         response['participants_id'] = json_params['participants_id']
         response['user_id'] = json_params['user_id']
 
+        response['number'] = json_params['number']
         tmp = json_params['number']
         res = 1
         for i in range(len(tmp)):
@@ -170,7 +171,7 @@ def tolmachev_best():
         response['models'] = models_main.main(json_params = json_params , model_to = 'message_id')
         log(logger,json_params,'model done',internal_id)
 
-        
+
         status_code = 200
         
         
@@ -190,6 +191,6 @@ def tolmachev_best():
 if __name__ == "__main__":
     #heroku
     port = int(os.getenv('PORT', 5000))
-    application.run(debug=False, port=port, host='0.0.0.0' , threaded=True)
+    application.run(debug=True, port=port, host='0.0.0.0' , threaded=True)
     #local
     #application.run()
