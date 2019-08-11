@@ -153,7 +153,7 @@ def tolmachev_best():
         response['dialog_id'] = json_params['dialog_id']
         response['participants_id'] = json_params['participants_id']
         response['user_id'] = json_params['user_id']
-       
+
         tmp = json_params['number']
         res = 1
         for i in range(len(tmp)):
@@ -170,7 +170,7 @@ def tolmachev_best():
         response['models'] = models_main.main(json_params = json_params , model_to = 'message_id')
         log(logger,json_params,'model done',internal_id)
 
-        status_number = json_params['number']
+        
         status_code = 200
         
         
@@ -185,7 +185,7 @@ def tolmachev_best():
 
     response = json.dumps(response)
     print(response)
-    return str(response)  , status_code,  status_number
+    return str(response)  , status_code
 
 if __name__ == "__main__":
     #heroku
