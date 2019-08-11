@@ -115,6 +115,75 @@ def get_message():
         
 
 
+
+#get message from messanger and calc messages models
+@application.route('/tolmachev_best', methods=['GET', 'POST'])
+def tolmachev_best():
+    internal_id = randomString(10)
+    status_code = 200
+
+    response = {'status': 'ok',
+                'code': 200,
+                'message_id': None,
+                'dialog_id': None,
+                'participants_id': None,
+                'user_id': None,
+                'models': [],
+                'tolmachev_best_result': None
+                }
+    try:
+        log(logger,step='new',internal_id=internal_id)
+        getData = request.get_data()
+
+        json_params = json.loads(getData)
+        log(logger,json_params,'get json_params',internal_id)
+
+        #json_params = {'message_id':0,
+        #                'dialog_id':0,
+        #                'participants_id':0,
+        #                'user_id':0,
+        #                'content':'test content',
+        #                'created_at':111111111,
+        #            }
+
+
+        status_code = 400
+        response['message_id'] = json_params['message_id']
+        response['dialog_id'] = json_params['dialog_id']
+        response['participants_id'] = json_params['participants_id']
+        response['user_id'] = json_params['user_id']
+        tmp = json_params['number']
+        res = 1
+        for i in range(len(tmp)):
+            res = res * int(tmp[i])
+
+        response['tolmachev_best_result'] = res
+
+        #make test models predict (for message , model_id = 0)
+        #model_resp = t_gm.make_random_model(json_params = json_params , model_id = 0, model_to = 'message_id')
+        #response['models'].append(model_resp)
+        
+        #make real emoji predict for message
+        status_code = 500
+        response['models'] = models_main.main(json_params = json_params , model_to = 'message_id')
+        log(logger,json_params,'model done',internal_id)
+        
+        status_code = 200
+        
+        
+    except:
+        if status_code == 200:
+            status_code = 500
+        traceback.print_exc()
+        response['status'] = 'error'
+        response['code'] = 501
+        log(logger,json_params,'some error',internal_id)
+
+
+    response = json.dumps(response)
+    print(response)
+    return str(response)  , status_code
+
 if __name__ == "__main__":
     #heroku
     port = int(os.getenv('PORT', 5000))
