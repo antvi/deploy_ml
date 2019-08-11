@@ -111,7 +111,7 @@ def get_message():
 
     response = json.dumps(response)
     print(response)
-    return str(response)  , status_code
+    return str(response), status_code
         
 
 
@@ -121,7 +121,7 @@ def get_message():
 def tolmachev_best():
     internal_id = randomString(10)
     status_code = 200
-   
+
 
     response = {'status': 'ok',
                 'code': 200,
@@ -153,7 +153,7 @@ def tolmachev_best():
         response['dialog_id'] = json_params['dialog_id']
         response['participants_id'] = json_params['participants_id']
         response['user_id'] = json_params['user_id']
-        response['number'] = json_params['number']
+       
         tmp = json_params['number']
         res = 1
         for i in range(len(tmp)):
